@@ -1,35 +1,22 @@
-import { FC } from "react";
-import { allDocs } from "@/.contentlayer/generated";
 import { notFound } from "next/navigation";
-
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
-// async function getDocFromParams(slug: string) {
-//   const doc = allDocs.find((it) => it.slugAsParams === slug);
-
-//   if (!doc) {
-//     notFound;
-//   }
-
-//   return doc;
-// }
+import { allPosts } from "@/.contentlayer/generated";
+import { BlogGrid } from "@/components/organisms";
 
 async function getDocFromParams() {
-  const doc = allDocs
-  if(!doc) notFound
+  const posts = allPosts;
+  if (!posts) notFound;
 
-  return doc;
+  return posts;
 }
 
-const Home = async ({ params }: PageProps) => {
-  console.log(params);
-  const doc = getDocFromParams();
+const Home = async () => {
+  const posts = await getDocFromParams();
 
-  return <main>{JSON.stringify(doc)} </main>;
+  return (
+    <main>
+      <BlogGrid posts={posts} />
+    </main>
+  );
 };
 
 export default Home;
